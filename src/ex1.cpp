@@ -1,25 +1,28 @@
+#include <Arduino.h>
 
+int leds[] = {26, 27, 12, 14, 12, 27};
+String names[] = {"RED", "GREEN", "YELLOW", "BLUE", "YELLOW", "GREEN"};
+int step = 0;
 
-
-#include "Arduino.h"
-
-#define RED_LED_PIN 26
-
-/****************************************************/
-void setup(void) 
-{
-    pinMode(RED_LED_PIN, OUTPUT); // RED LED
+void setup() {
+  Serial.begin(115200);
+  pinMode(26, OUTPUT);
+  pinMode(27, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(14, OUTPUT);
 }
 
+void loop() {
+  digitalWrite(26, LOW);
+  digitalWrite(27, LOW);
+  digitalWrite(12, LOW);
+  digitalWrite(14, LOW);
 
-/****************************************************/
-void loop(void) 
-{
-    digitalWrite(RED_LED_PIN, HIGH); // Turn RED ON
-    Serial.println("RED ON");
-    delay(1000); // Wait for 1000 ms
+  digitalWrite(leds[step], HIGH);
+  Serial.println("chase=" + names[step]);
 
-    digitalWrite(RED_LED_PIN, LOW); // Turn RED OFF
-    Serial.println("RED OFF");
-    delay(1000); // Wait for 1000 ms
+  step++;
+  if (step >= 6) step = 0;
+
+  delay(150);
 }
